@@ -1,0 +1,123 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<time.h>
+int main()
+{
+	int j,randvar,loopvar=0;
+	static int d=0,e=0;
+	FILE *qstnsfile,*ansfile;
+	char qstr[20][200],answer[50],ans[20][200],sol[50];
+	int ran[10]={0,0,0,0,0,0,0,0,0,0},rdm[5],fend;
+	qstnsfile=fopen("qans.txt","r");
+	fseek(qstnsfile,0,2);
+	fend=ftell(qstnsfile);
+	fseek(qstnsfile,0,0);
+	while(ftell(qstnsfile)!=fend)
+	{
+		fgets(qstr[j],100,qstnsfile);
+		j++;
+	}
+	fclose(qstnsfile);
+	srand(time(0));
+	fclose(qstnsfile);
+	for(loopvar=0;loopvar<5;loopvar++)
+	{
+		randvar=rand()%20+1;
+		if(ran[randvar-1]!=0)
+			loopvar--;
+		else
+		{
+			ran[randvar-1]++;
+			rdm[loopvar]=randvar-1;
+		}
+	}
+	ansfile=fopen("ans.txt","r");
+	fseek(ansfile,0,2);
+	fend=ftell(qstnsfile);
+	fseek(ansfile,0,0);
+	j=0;
+	while(ftell(ansfile)!=fend)
+	{
+		fgets(ans[j],100,ansfile);
+		j++;
+	}
+	fclose(ansfile);
+	printf("\nQUIz GAME STARTS\nLEVEL-1\nAnswer the following Questions\nplease enter the complete answer(in small letters)\n");
+	for(loopvar=0;loopvar<5;loopvar++)
+	{
+		puts(qstr[rdm[loopvar]]);
+		fflush(stdin);
+		scanf("%s",&answer);
+		printf("you have entered:\n");
+		puts(answer);
+		int len=strlen(ans[rdm[loopvar]]);
+	       	strncpy(sol,ans[rdm[loopvar]],len-1);
+		sol[len-1]='\0';
+		if(strcmp(sol,answer)==0)
+			d++;
+			printf("\nYES you have enterd the correct answer");	
+		else
+			printf("\nYou have entered wrong answer\nthe correct answer is %s",sol);
+			printf("\nyour score is %d out of 5",d);
+			return 0;
+	}
+	printf("\nCONGRATULATIONS!!YOU HAVE CLEARED THE 1ST LEVEL\nNOW YOU HAVE TO PLAY LEVEL-2\nALL THE BEST ");
+	int ram[10]={0,0,0,0,0,0,0,0,0,0},rcm[5];
+	qstnsfile=fopen("qanst.txt","r");
+        fseek(qstnsfile,0,2);
+        fend=ftell(qstnsfile);
+        fseek(qstnsfile,0,0);
+        j=0;
+	while(ftell(qstnsfile)!=fend)
+        {
+                fgets(qstr[j],100,qstnsfile);
+                j++;
+        }
+        fclose(qstnsfile);
+	srand(time(0));
+        fclose(qstnsfile);
+        for(loopvar=0;loopvar<5;loopvar++)
+        {
+                randvar=rand()%10+1;
+                if(ram[randvar-1]!=0)
+                        loopvar--;
+                else
+                {
+                        ram[randvar-1]++;
+                        rdm[loopvar]=randvar-1;
+		}
+	}
+        ansfile=fopen("anss.txt","r");
+        fseek(ansfile,0,2);
+        fend=ftell(ansfile);
+        fseek(ansfile,0,0);
+        j=0;
+        while(ftell(ansfile)!=fend)
+        {
+                fgets(ans[j],100,ansfile);
+                j++;
+        }
+        fclose(ansfile);
+        printf("\nAnswers The Following questions\nplease enter the complete answer(in small letters)\n");
+        for(loopvar=0;loopvar<5;loopvar++)
+        {
+                puts(qstr[rdm[loopvar]]);
+                fflush(stdin);
+                scanf("%s",&answer);
+		printf("\nyou have entered:");
+                puts(answer);
+                int len=strlen(ans[rdm[loopvar]]);
+                strncpy(sol,ans[rdm[loopvar]],len-1);
+                sol[len-1]='\0';
+                if(strcmp(sol,answer)==0)
+			e++;
+                        printf("\nYES YOU HAVE ENTERED CORRECT ANSWER");	
+		else
+			printf("your answer is wrong\nthe correct answer is:%s\n",sol);
+			printf("\nYour score is %d out of 5 in LEVEL-2",e);
+			return 0;
+	}
+	printf("\n\tWINNER WINNER CHICKEN DINNER");
+	return 0;
+}
